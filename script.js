@@ -1,5 +1,5 @@
 const myImage = new Image();
-myImage.src = 'image7.png';
+myImage.src = 'image3.png';
 
 myImage.addEventListener('load', function(){
   const canvas = document.getElementById('canvas1');
@@ -7,24 +7,6 @@ myImage.addEventListener('load', function(){
   
   canvas.width = 500;
   canvas.height = 506;
-  const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, canvas.height/2);
-  gradient1.addColorStop(0.2, 'pink');
-  gradient1.addColorStop(0.3, 'red');
-  gradient1.addColorStop(0.4, 'orange');
-  gradient1.addColorStop(0.5, 'yellow');
-  gradient1.addColorStop(0.6, 'green');
-  gradient1.addColorStop(0.7, 'turquoise');
-  gradient1.addColorStop(0.8, 'violet');
-
-  const letters = ['M','A'];
-  let switcher = 1;
-  let counter = 0;
-  setInterval(function(){
-    counter++;
-    if (counter % 12 === 0){
-      switcher *= -1;
-    }
-  }, 500);
   
   ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
   const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -44,7 +26,6 @@ myImage.addEventListener('load', function(){
       const brightness = calculateRelativeBrightness(red, green, blue);
       const cell = [
         cellBrightness = brightness,
-        cellColor = 'rgb(' + red + ',' + green + ',' + blue + ')'
       ];
       row.push(cell);
     }
@@ -68,56 +49,25 @@ myImage.addEventListener('load', function(){
       this.size = Math.random() * 1.5 + 1;
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
-      this.angle = 0;
-      this.letter = letters[Math.floor(Math.random() * letters.length)]
-      this.random = Math.random();
     }
 
     update() {
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
-      if((mappedImage[this.position1])&&(mappedImage[this.position1][this.position2])){
-        this.speed = mappedImage[this.position1][this.position2][0];
-      }
-
+      this.speed = mappedImage[this.position1][this.position2][0];
       let movement = (2.5 - this.speed) + this.velocity;
-      this.angle += this.speed/10; // decimal number alternative ex.: 0.3
-      this.size = this.speed;
-      
-      // if(switcher === 1) {
-      //   ctx.globalCompositeOperation = 'luminosity';
-      // } else {
-      //   ctx.globalCompositeOperation = 'lighter';
-      // }
-      // if(counter % 10 === 0){
-      //   this.x = Math.random() * canvas.width;
-      //   this.y = Math.random() * canvas.height;
-      // }
 
-      this.y += movement + Math.sin(this.angle) * 2; // divide instead of calculation sin and cos
-      this.x += movement + Math.cos(this.angle) * 1;
+      this.y += movement;
       if(this.y >= canvas.height){
         this.y = 0;
         this.x = Math.random() * canvas.width;
-      }
-      if(this.x >= canvas.width){
-        this.x = 0;
-        this.y = Math.random() * canvas.width;
       }
     }
 
     draw(){
       ctx.beginPath();
-      if((mappedImage[this.position1])&&(mappedImage[this.position1][this.position2])){
-        ctx.fillStyle = mappedImage[this.position1][this.position2][1];
-        // ctx.strokeStyle = mappedImage[this.position1][this.position2][1];
-      }
-      // ctx.fillStyle = gradient1 // apply gradient
+      ctx.fillStyle = 'white';
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      // ctx.strokeRect(this.x, this.y, this.size, this.size);
-      // ctx.font = '20px Arial';
-      // if(this.random < 0.1) ctx.fillText(this.letter, this.x, this.y);
-      // else ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -134,7 +84,7 @@ myImage.addEventListener('load', function(){
     ctx.globalAlpha = 0.05;
     ctx.fillStyle = 'rgb(0,0,0)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 0.2;
+    // ctx.globalAlpha = 0.2;
 
     for(let i = 0; i < particlesArray.length; i++) {
       particlesArray[i].update();
