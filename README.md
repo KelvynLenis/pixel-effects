@@ -1,7 +1,8 @@
 # pixel-effects
 pixel effetcs on browser using HTML, CSS and Javascript.
 
+## Falling black and white pixel effetc
 
-![image](https://im7.ezgif.com/tmp/ezgif-7-822c030b44.gif)
+![image](black_and_white.gif)
 
 
