@@ -71,7 +71,7 @@ function init() {
   for(let y = 0, y2 = textCoordinates.height; y < y2; y++){
     for(let x = 0, x2 = textCoordinates.width; x < x2; x++){
      if(textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
-       let positionX = x + adjustX;
+       let positionX = x ;
        let postionY = y + adjustY;
        particleArray.push(new Particle(positionX * 10, postionY * 10));
      } 
